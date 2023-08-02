@@ -10,6 +10,9 @@ import {
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { CurrentUser } from 'src/auth/decorators/currentUser.decorator';
+import { UserFromJwt } from 'src/auth/types/UserFromJwt';
+import { IsPublic } from 'src/auth/decorators/isPublic.decorator';
 
 @Controller('user')
 export class UserController {
@@ -20,6 +23,12 @@ export class UserController {
     return this.userService.create(createUserDto);
   }
 
+  @Get('me')
+  GetMe(@CurrentUser() user: UserFromJwt) {
+    return this.userService.findById(user.id);
+  }
+
+  // @IsPublic()
   @Get()
   findAll() {
     return this.userService.findAll();
