@@ -4,7 +4,7 @@ import { User } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 import { CreateUserDto } from './dto/create-user.dto';
-// import { UpdateUserDto } from './dto/update-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 import { MessagesHelper } from './helpers/messages.helper';
 
 @Injectable()
@@ -46,7 +46,7 @@ export class UserService {
       where: { id },
     });
     if (!existsUser) {
-      throw new BadRequestException(MessagesHelper.USER_EMAIL_EXISTS);
+      throw new BadRequestException(MessagesHelper.USER_ID_NOT_FOUND);
     }
     const user = {
       ...existsUser,
@@ -60,7 +60,7 @@ export class UserService {
       where: { email },
     });
     if (!existsUser) {
-      throw new BadRequestException(MessagesHelper.USER_EMAIL_EXISTS);
+      throw new BadRequestException(MessagesHelper.USER_EMAIL_NOT_FOUND);
     }
     const user = {
       ...existsUser,
@@ -69,14 +69,31 @@ export class UserService {
     return user;
   }
 
-  // update(id: number, updateUserDto: UpdateUserDto) {
-  //   return `This action updates a #${id} user`;
-  // }
+  async update(id: string, updateUserDto: UpdateUserDto) {
+    const existsUser = await this.prisma.user.findUnique({
+      where: { id },
+    });
+    if (!existsUser) {
+      throw new BadRequestException(MessagesHelper.USER_ID_NOT_FOUND);
+    }
+    const updatedUser = await this.prisma.user.update({
+      where: { id },
+      data: updateUserDto,
+    });
 
-  async delete(id: string): Promise<string> {
+    return updatedUser;
+  }
+
+  async remove(id: string): Promise<string> {
+    const existsUser = await this.prisma.user.findUnique({
+      where: { id },
+    });
+    if (!existsUser) {
+      throw new BadRequestException(MessagesHelper.USER_ID_NOT_FOUND);
+    }
     await this.prisma.user.delete({
       where: { id },
     });
-    return `This action removes a #${id} user`;
+    return `Esta ação removeu a #${id} user`;
   }
 }

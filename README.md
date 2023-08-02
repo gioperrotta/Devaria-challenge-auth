@@ -2,8 +2,8 @@
 
 # RFs (Requisitos funcionais)
 
-- [ ] Deve ser possível se cadastrar usuário (users)
-- [ ] Deve ser possível se autenticar
+- [x] Deve ser possível se cadastrar usuário (users)
+- [x] Deve ser possível se autenticar
 - [ ] Deve ser possível se cadastrar funções (roles )
 
 - [ ] Deve ser possível obter o perfil de um usuário logado
@@ -16,7 +16,7 @@
 - [ ] Deve ser possível cadastrar uma academia
 
 # RNs (Regras de negócio)
-- [ ] O usuário não pode se cadastrar com email duplicado
+- [x] O usuário não pode ser cadastrado com email duplicado
 - [ ] O usuário deve estar autenticado para cadastrar outro usuário
 - [ ] O usuário só poderá cadastrar outro usuário de função inferior a sua
 - [ ] Somente usuários Admin poderão cadastrar e alterar funções (roles)
@@ -28,9 +28,11 @@
 - [ ] A academia só pode ser cadastrada por administradores
 
 # RNFs (requisitos não-funcionais)
-- [ ] A senha do usuario tem que estar criptografada e deve ser forte
-- [ ] Os dados do app devem estar pressistidos em um banco PostgreSQL
-- [ ] O usuário tem que ser identificado e autenticado por um JWT (JSON Web Token)
+- [x] A senha do usuario tem que estar criptografada e deve ser forte
+- [x] Os dados do app devem estar pressistidos em um banco PostgreSQL
+- [x] O usuário tem que ser identificado e autenticado por um JWT (JSON Web Token)
+- [x] O decorator @IsPublic() deve preceder todas as rotas que não necessitam de autenticação
+
 
 
 
