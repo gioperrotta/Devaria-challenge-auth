@@ -1,4 +1,10 @@
-import { IsEmail, Matches, MaxLength, MinLength } from 'class-validator';
+import {
+  IsEmail,
+  IsNumber,
+  Matches,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
 import { User } from '../entities/user.entity';
 import { MessagesHelper } from '../helpers/messages.helper';
 
@@ -15,4 +21,7 @@ export class CreateUserDto extends User {
     message: MessagesHelper.USER_PASSWORD_NOT_STRONG,
   })
   password: string;
+
+  @IsNumber({}, { message: MessagesHelper.USER_ROLE_ID_NOT_VALID })
+  roleId: number;
 }

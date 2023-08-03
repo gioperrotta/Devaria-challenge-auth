@@ -19,6 +19,13 @@ export class UserService {
       throw new BadRequestException(MessagesHelper.USER_EMAIL_EXISTS);
     }
 
+    const existsRole = await this.prisma.role.findUnique({
+      where: { id: createUserDto.roleId },
+    });
+    if (!existsRole) {
+      throw new BadRequestException(MessagesHelper.USER_ROLEID_NOT_EXIST);
+    }
+
     const passwordHashed = await hash(createUserDto.password, 6);
     const newUser = {
       ...createUserDto,

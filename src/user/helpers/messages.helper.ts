@@ -7,4 +7,6 @@ export const MessagesHelper = {
   USER_EMAIL_EXISTS: 'Já existe um usuário cadastrado com o Email informado',
   USER_ID_NOT_FOUND: 'Não existe um usuário cadastradocom o Id informado',
   USER_EMAIL_NOT_FOUND: 'Não existe um usuário cadastradocom o Id informado',
+  USER_ROLE_ID_NOT_VALID: 'Valor informado para a Função não é válido',
+  USER_ROLEID_NOT_EXIST: 'Valor informado para a Função não existe na coleção',
 };

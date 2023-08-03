@@ -4,34 +4,35 @@
 
 - [x] Deve ser possível se cadastrar usuário (users)
 - [x] Deve ser possível se autenticar
-- [ ] Deve ser possível se cadastrar funções (roles )
+- [x] Deve ser possível se cadastrar funções (roles )
+- [x] Deve ser possível obter o perfil de um usuário logado
+- [x] Deve ser possível obter informações do endereço consulatando cep
+- [] Deve ser possível através de uma rota publica cadastrar usuários de nível mais baixo 
 
 - [ ] Deve ser possível obter o perfil de um usuário logado
-- [ ] Deve ser possível obter o número de check-ins pelo usuário logado
 - [ ] Deve ser possível obter o perfil de um usuário logado
 - [ ] Deve ser possível obter o perfil de um usuário logado
-- [ ] Deve ser possível obter o perfil de um usuário logado
-- [ ] Deve ser possível obter o perfil de um usuário logado
-- [ ] Deve ser possível validar o check-in de um usuário
-- [ ] Deve ser possível cadastrar uma academia
+
 
 # RNs (Regras de negócio)
 - [x] O usuário não pode ser cadastrado com email duplicado
-- [ ] O usuário deve estar autenticado para cadastrar outro usuário
-- [ ] O usuário só poderá cadastrar outro usuário de função inferior a sua
-- [ ] Somente usuários Admin poderão cadastrar e alterar funções (roles)
+- [x] Role não pode ser cadastrado com name duplicado
+- [x] Somente usuários Admin poderão cadastrar e alterar funções (roles)
+- [x] Somente usuários com autorização poderão acessar recurso expecíficos
+- [x] Usuários Administradores poderão acessar qualquer recurso
+- [x] O usuário deve estar autenticado para cadastrar outro usuário
 
-- [ ] O usuário não pode fazer 2 check-ins no mesmao dia
-- [ ] O usuário não pode fazer check-ins a menos de (100m) da academia
-- [ ] O check-in só pode ser validado após 20 minutos após ser criado
-- [ ] O check-in só pode ser validado por administradores
-- [ ] A academia só pode ser cadastrada por administradores
+
+- [ ] O usuário só poderá cadastrar outro usuário de função inferior 
+- [ ] O usuário só poderá cadastrar outro usuário de função inferior
 
 # RNFs (requisitos não-funcionais)
 - [x] A senha do usuario tem que estar criptografada e deve ser forte
 - [x] Os dados do app devem estar pressistidos em um banco PostgreSQL
 - [x] O usuário tem que ser identificado e autenticado por um JWT (JSON Web Token)
 - [x] O decorator @IsPublic() deve preceder todas as rotas que não necessitam de autenticação
+- [x] Para consulta de cep vamos utilizar a API https://viacep.com.br/ws
+
 
 
 

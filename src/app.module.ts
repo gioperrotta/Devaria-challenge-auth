@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 
 import { APP_GUARD } from '@nestjs/core';
-import { JwtAuthGuard } from './auth/guards/jwt.guards';
+import { JwtAuthGuard } from './auth/guards/jwt.guard';
 
 import { AppController } from './app.controller';
 import { PrismaModule } from './prisma/prisma .module';

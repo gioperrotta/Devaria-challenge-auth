@@ -16,6 +16,10 @@ model User {
   email    String @unique
   password String
 
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  role      Role     @relation(fields: [roleId], references: [id])
+  roleId    Int      @map(name: "role_id")
+
   @@map("users")
 }
 
@@ -26,6 +30,7 @@ model Role {
   level       Int    @default(9)
 
   createdAt DateTime @default(now()) @map(name: "created_at")
+  users     User[]
 
   @@map("roles")
 }
