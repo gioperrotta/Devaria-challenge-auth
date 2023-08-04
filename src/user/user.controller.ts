@@ -17,14 +17,15 @@ import { IsPublic } from 'src/auth/decorators/isPublic.decorator';
 import { AccessRolesGuard } from 'src/auth/guards/roleAccess.guard';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from 'src/role/types/roleName.enum';
+import { CreateUserGuard } from 'src/auth/guards/createUser.guard';
 
 @Controller('user')
-@UseGuards(AccessRolesGuard)
+@UseGuards(AccessRolesGuard, CreateUserGuard)
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @IsPublic()
   @Post()
+  @Roles(Role.Admin, Role.Manager)
   create(@Body() createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto);
   }
@@ -35,8 +36,8 @@ export class UserController {
     return this.userService.findById(user.id);
   }
 
-  @IsPublic()
   @Get()
+  @Roles(Role.Admin, Role.Manager)
   findAll() {
     return this.userService.findAll();
   }
@@ -57,6 +58,7 @@ export class UserController {
   }
 
   @Delete(':id')
+  @Roles(Role.Admin)
   delete(@Param('id') id: string) {
     return this.userService.remove(id);
   }

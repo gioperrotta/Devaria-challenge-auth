@@ -17,8 +17,10 @@ model User {
   password String
 
   createdAt DateTime @default(now()) @map(name: "created_at")
-  role      Role     @relation(fields: [roleId], references: [id])
-  roleId    Int      @map(name: "role_id")
+
+  role          Role            @relation(fields: [roleId], references: [id])
+  roleId        Int             @map(name: "role_id")
+  FranchiseUnit FranchiseUnit[]
 
   @@map("users")
 }
@@ -30,7 +32,53 @@ model Role {
   level       Int    @default(9)
 
   createdAt DateTime @default(now()) @map(name: "created_at")
-  users     User[]
+
+  users User[]
 
   @@map("roles")
+}
+
+model FranchiseUnit {
+  id   String @id @default(uuid())
+  name String @map(name: "razao_social")
+  cnpj String @unique
+
+  createdAt DateTime @default(now()) @map(name: "created_at")
+
+  manager       User            @relation(fields: [managerId], references: [id])
+  managerId     String          @map(name: "manager_id")
+  UnitAddresses UnitAddresses[]
+
+  @@map("franchise_units")
+}
+
+enum Type_Addresses {
+  Entrega
+  Faturamento
+}
+
+model Address {
+  id         String @id @default(uuid())
+  cep        String
+  logradouro String
+  numero     String
+  complement String
+  bairro     String
+  cidade     String
+  uf         String
+
+  unit            UnitAddresses @relation(fields: [unitAddressesId], references: [id])
+  unitAddressesId String        @map(name: "unit_address_id")
+
+  @@map("addresses")
+}
+
+model UnitAddresses {
+  id   String         @id @default(uuid())
+  tipo Type_Addresses @default(Entrega)
+
+  unit            FranchiseUnit @relation(fields: [franchiseUnitId], references: [id])
+  franchiseUnitId String        @map(name: "franchise_unit_id")
+
+  Address Address[]
 }

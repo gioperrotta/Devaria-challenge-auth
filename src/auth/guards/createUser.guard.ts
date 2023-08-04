@@ -1,7 +1,7 @@
 import {
+  Injectable,
   CanActivate,
   ExecutionContext,
-  Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
@@ -14,7 +14,7 @@ import { UserPayload } from '../types/UserPayload';
 import { MessagesHelper } from '../helpers/messages.helper';
 
 @Injectable()
-export class AccessRolesGuard implements CanActivate {
+export class CreateUserGuard implements CanActivate {
   constructor(
     private reflector: Reflector,
     private readonly prisma: PrismaService,
@@ -29,6 +29,9 @@ export class AccessRolesGuard implements CanActivate {
       return true;
     }
 
+    if (context.getArgs()[0].method !== 'POST') {
+      return true;
+    }
     const token = context.getArgs()[0].headers.authorization.split(' ')[1];
     const payload: UserPayload = jwt_decode(token);
     const userRequest = await this.prisma.user.findUnique({
@@ -40,14 +43,12 @@ export class AccessRolesGuard implements CanActivate {
     if (!userRequest) {
       throw new UnauthorizedException(MessagesHelper.UNAUTHORIZED);
     }
-
     if (userRequest.role.level === 0) {
       return true;
     }
-
     const roles = this.reflector.get<string[]>('roles', context.getHandler());
     if (!roles) {
-      return true;
+      throw new UnauthorizedException(MessagesHelper.UNAUTHORIZED);
     }
     const userRoleMatch = roles.filter(
       (role) => role === userRequest.role.name,
@@ -56,6 +57,19 @@ export class AccessRolesGuard implements CanActivate {
     if (userRoleMatch.length === 0) {
       throw new UnauthorizedException(MessagesHelper.UNAUTHORIZED);
     }
-    return true;
+
+    try {
+      const body = context.getArgs()[0].body;
+      const roleNewUser = await this.prisma.role.findUnique({
+        where: { id: body?.roleId },
+      });
+
+      if (userRequest.role.level < roleNewUser.level) {
+        return true;
+      }
+      throw new UnauthorizedException(MessagesHelper.UNAUTHORIZED);
+    } catch (error) {
+      throw new UnauthorizedException(MessagesHelper.UNAUTHORIZED);
+    }
   }
 }

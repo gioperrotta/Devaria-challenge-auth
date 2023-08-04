@@ -7,12 +7,10 @@
 - [x] Deve ser possível se cadastrar funções (roles )
 - [x] Deve ser possível obter o perfil de um usuário logado
 - [x] Deve ser possível obter informações do endereço consulatando cep
-- [] Deve ser possível através de uma rota publica cadastrar usuários de nível mais baixo 
 
 - [ ] Deve ser possível obter o perfil de um usuário logado
 - [ ] Deve ser possível obter o perfil de um usuário logado
 - [ ] Deve ser possível obter o perfil de um usuário logado
-
 
 # RNs (Regras de negócio)
 - [x] O usuário não pode ser cadastrado com email duplicado
@@ -21,10 +19,7 @@
 - [x] Somente usuários com autorização poderão acessar recurso expecíficos
 - [x] Usuários Administradores poderão acessar qualquer recurso
 - [x] O usuário deve estar autenticado para cadastrar outro usuário
-
-
-- [ ] O usuário só poderá cadastrar outro usuário de função inferior 
-- [ ] O usuário só poderá cadastrar outro usuário de função inferior
+- [x] O usuário só poderá cadastrar outro usuário de função inferior a sua
 
 # RNFs (requisitos não-funcionais)
 - [x] A senha do usuario tem que estar criptografada e deve ser forte
