@@ -18,9 +18,9 @@ model User {
 
   createdAt DateTime @default(now()) @map(name: "created_at")
 
-  role          Role            @relation(fields: [roleId], references: [id])
-  roleId        Int             @map(name: "role_id")
-  FranchiseUnit FranchiseUnit[]
+  role           Role            @relation(fields: [roleId], references: [id])
+  roleId         Int             @map(name: "role_id")
+  FranchiseUnits FranchiseUnit[]
 
   @@map("users")
 }
@@ -58,14 +58,14 @@ enum Type_Addresses {
 }
 
 model Address {
-  id         String @id @default(uuid())
-  cep        String
-  logradouro String
-  numero     String
-  complement String
-  bairro     String
-  cidade     String
-  uf         String
+  id          String @id @default(uuid())
+  cep         String
+  logradouro  String
+  numero      String
+  complemento String
+  bairro      String
+  cidade      String
+  uf          String
 
   unit            UnitAddresses @relation(fields: [unitAddressesId], references: [id])
   unitAddressesId String        @map(name: "unit_address_id")

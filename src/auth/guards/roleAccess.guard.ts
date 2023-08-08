@@ -41,14 +41,17 @@ export class AccessRolesGuard implements CanActivate {
       throw new UnauthorizedException(MessagesHelper.UNAUTHORIZED);
     }
 
+    // Usuário Admin tem acesso a todas as rotas do sistema
     if (userRequest.role.level === 0) {
       return true;
     }
 
     const roles = this.reflector.get<string[]>('roles', context.getHandler());
+    // todos os usuários autenticados estão autorizados para a rota
     if (!roles) {
       return true;
     }
+
     const userRoleMatch = roles.filter(
       (role) => role === userRequest.role.name,
     );
