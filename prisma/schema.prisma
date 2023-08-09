@@ -45,9 +45,9 @@ model FranchiseUnit {
 
   createdAt DateTime @default(now()) @map(name: "created_at")
 
-  manager       User            @relation(fields: [managerId], references: [id])
-  managerId     String          @map(name: "manager_id")
-  UnitAddresses UnitAddresses[]
+  manager   User      @relation(fields: [managerId], references: [id])
+  managerId String    @map(name: "manager_id")
+  Address   Address[]
 
   @@map("franchise_units")
 }
@@ -58,27 +58,18 @@ enum Type_Addresses {
 }
 
 model Address {
-  id          String @id @default(uuid())
+  id          String         @id @default(uuid())
+  tipo        Type_Addresses @default(Entrega)
   cep         String
   logradouro  String
   numero      String
-  complemento String
+  complemento String?
   bairro      String
   cidade      String
   uf          String
 
-  unit            UnitAddresses @relation(fields: [unitAddressesId], references: [id])
-  unitAddressesId String        @map(name: "unit_address_id")
-
-  @@map("addresses")
-}
-
-model UnitAddresses {
-  id   String         @id @default(uuid())
-  tipo Type_Addresses @default(Entrega)
-
-  unit            FranchiseUnit @relation(fields: [franchiseUnitId], references: [id])
+  franchise_unit  FranchiseUnit @relation(fields: [franchiseUnitId], references: [id])
   franchiseUnitId String        @map(name: "franchise_unit_id")
 
-  Address Address[]
+  @@map("addresses")
 }

@@ -15,13 +15,15 @@ import { UpdateRoleDto } from './dto/updateRole.dto';
 import { AccessRolesGuard } from 'src/auth/guards/roleAccess.guard';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from './types/roleName.enum';
+import { IsPublic } from 'src/auth/decorators/isPublic.decorator';
 
 @Controller('role')
 @UseGuards(AccessRolesGuard)
 export class RoleController {
   constructor(private readonly roleService: RoleService) {}
 
-  @Roles(Role.Admin)
+  // @Roles(Role.Admin)
+  @IsPublic()
   @Post()
   create(@Body() createRoleDto: CreateRoleDto) {
     return this.roleService.create(createRoleDto);

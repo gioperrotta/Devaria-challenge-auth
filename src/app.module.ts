@@ -9,6 +9,8 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { RoleModule } from './role/role.module';
 import { ConsultaCepModule } from './consultaCep/consultaCep.module';
+import { FranchiseUnitModule } from './franchise-unit/franchise-unit.module';
+import { AddressModule } from './address/address.module';
 
 @Module({
   imports: [
@@ -17,6 +19,8 @@ import { ConsultaCepModule } from './consultaCep/consultaCep.module';
     AuthModule,
     RoleModule,
     ConsultaCepModule,
+    FranchiseUnitModule,
+    AddressModule,
   ],
   controllers: [AppController],
   providers: [{ provide: APP_GUARD, useClass: JwtAuthGuard }],

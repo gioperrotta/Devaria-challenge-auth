@@ -12,6 +12,7 @@ import { UpdateUserDto } from './dto/updateUser.dto';
 import { MessagesHelper } from './helpers/messages.helper';
 import { RoleService } from 'src/role/role.service';
 import { ChangePasswordDto } from './dto/changePassword.dto';
+import { UserWithRole } from './entities/UserWithRole.entity';
 
 @Injectable()
 export class UserService {
@@ -74,9 +75,10 @@ export class UserService {
     return usersWithoutPassword;
   }
 
-  async findById(userId: string): Promise<User> {
+  async findById(userId: string): Promise<UserWithRole> {
     const existsUser = await this.prisma.user.findUnique({
       where: { id: userId },
+      include: { role: true },
     });
     if (!existsUser) {
       throw new BadRequestException(MessagesHelper.USER_ID_NOT_FOUND);

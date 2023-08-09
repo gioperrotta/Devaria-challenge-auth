@@ -17,7 +17,6 @@ import { AccessRolesGuard } from 'src/auth/guards/roleAccess.guard';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from 'src/role/types/roleName.enum';
 import { ChangePasswordDto } from './dto/changePassword.dto';
-// import { CreateUserGuard } from 'src/auth/guards/createUser.guard';
 
 @Controller('user')
 @UseGuards(AccessRolesGuard)
