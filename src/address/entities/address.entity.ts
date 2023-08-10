@@ -1,11 +1,11 @@
-enum Type_Address {
+export enum Type_Address {
   Entrega = 'Entrega',
   Faturamento = 'Faturamento',
 }
 
 export class Address {
   id?: string;
-  tipo: Type_Address;
+  tipo: string;
   cep: string;
   logradouro: string;
   numero: string;
@@ -13,4 +13,5 @@ export class Address {
   bairro: string;
   cidade: string;
   uf: string;
+  franchiseUnitId: string;
 }

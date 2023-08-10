@@ -4,8 +4,7 @@ import { MessagesHelper } from '../helpers/messages.helper';
 import { Role } from '../types/roleName.enum';
 
 export class CreateRoleDto {
-  @MinLength(4, { message: MessagesHelper.ROLE_NAME_NOT_VALID })
-  @IsEnum(Role, { message: 'NAO ESTA NO ENUM' })
+  @IsEnum(Role, { message: MessagesHelper.ROLE_NAME_NOT_VALID })
   name: string;
 
   @MinLength(8, { message: MessagesHelper.ROLE_DESCRIPTION_NOT_VALID })

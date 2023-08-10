@@ -8,19 +8,20 @@
 - [x] Deve ser possível obter o perfil de um usuário logado
 - [x] Deve ser possível obter informações do endereço consulatando cep
 - [x] Deve ser possível o usuário alterar sua própia senha
-
-- [ ] 
-- [ ] 
-- [ ] 
+- [x] Deve ser possível cadastrar Unidades de Franquia( Franchise Unit)
+- [x] Deve ser possível associar um usuário como gerente de uma unidade de Franquia
+- [x] Deve ser possivel cadastrar endereços(Address) para Unidades de Franquia 
 
 # RNs (Regras de negócio)
 - [x] O usuário não pode ser cadastrado com email duplicado
 - [x] Role não pode ser cadastrado com name duplicado
-- [x] Somente usuários Admin poderão cadastrar, excluir e alterar funções (roles)
 - [x] Somente usuários com autorização poderão acessar recurso expecíficos
-- [x] Usuários administradores poderão acessar qualquer recurso
+- [x] Usuários Admin poderão acessar qualquer recurso
 - [x] O usuário deve estar autenticado para cadastrar outro usuário
 - [x] O usuário só poderá cadastrar outro usuário de função inferior a sua
+- [x] O CNPJ da unidade de Franquia não pode ser duplicado
+- [x] O CNPJ deve ser validado de acordo com seus dgitos verificadores
+- [x] Cada unidade de Franquia só poderá ter dois endereços: Entrega e Faturamento
 
 # RNFs (requisitos não-funcionais)
 - [x] A senha do usuario tem que estar criptografada e deve ser forte

@@ -27,6 +27,7 @@ export class FranchiseUnitService {
     const user = await this.userService.findById(
       createFranchiseUnitDto.managerId,
     );
+
     if (user.role.name !== 'Manager') {
       throw new BadRequestException(MessagesHelper.UNIT_MANAGER_NOT_FOUND);
     }
@@ -42,7 +43,7 @@ export class FranchiseUnitService {
     return await this.prisma.franchiseUnit.findMany();
   }
 
-  async findOne(id: string): Promise<FranchiseUnit> {
+  async findById(id: string): Promise<FranchiseUnit> {
     const existsUnit = await this.prisma.franchiseUnit.findUnique({
       where: { id },
     });

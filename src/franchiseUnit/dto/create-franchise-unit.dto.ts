@@ -1,8 +1,9 @@
 import { IsUUID, MinLength, Validate } from 'class-validator';
 import { MessagesHelper } from '../helpers/messages.helper';
-import { ValidateCnpj } from 'src/util/validate-cnpj';
+import { ValidateCnpj } from 'src/util/validate-CNPJ';
+import { FranchiseUnit } from '../entities/franchise-unit.entity';
 
-export class CreateFranchiseUnitDto {
+export class CreateFranchiseUnitDto extends FranchiseUnit {
   @MinLength(10, { message: MessagesHelper.UNIT_NAME_NOT_VALID })
   name: string;
 
