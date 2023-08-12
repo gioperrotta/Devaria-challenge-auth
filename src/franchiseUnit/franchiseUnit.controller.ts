@@ -13,8 +13,10 @@ import { CreateFranchiseUnitDto } from './dto/create-franchise-unit.dto';
 import { UpdateFranchiseUnitDto } from './dto/update-franchise-unit.dto';
 import { AccessRolesGuard } from 'src/auth/guards/roleAccess.guard';
 import { Roles } from 'src/auth/decorators/roles.decorator';
-import { Role } from 'src/role/types/roleName.enum';
+import { Role } from 'src/role/types/role.enum';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('franchise-unit')
 @Controller('franchise-unit')
 @UseGuards(AccessRolesGuard)
 export class FranchiseUnitController {

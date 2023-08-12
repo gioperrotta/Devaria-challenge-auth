@@ -15,9 +15,11 @@ import { CurrentUser } from 'src/auth/decorators/currentUser.decorator';
 import { UserFromJwt } from 'src/auth/types/UserFromJwt';
 import { AccessRolesGuard } from 'src/auth/guards/roleAccess.guard';
 import { Roles } from 'src/auth/decorators/roles.decorator';
-import { Role } from 'src/role/types/roleName.enum';
+import { Role } from 'src/role/types/role.enum';
 import { ChangePasswordDto } from './dto/changePassword.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('user')
 @Controller('user')
 @UseGuards(AccessRolesGuard)
 export class UserController {

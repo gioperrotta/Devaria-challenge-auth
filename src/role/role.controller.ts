@@ -14,9 +14,11 @@ import { UpdateRoleDto } from './dto/updateRole.dto';
 
 import { AccessRolesGuard } from 'src/auth/guards/roleAccess.guard';
 import { Roles } from 'src/auth/decorators/roles.decorator';
-import { Role } from './types/roleName.enum';
+import { Role } from './types/role.enum';
 import { IsPublic } from 'src/auth/decorators/isPublic.decorator';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('role')
 @Controller('role')
 @UseGuards(AccessRolesGuard)
 export class RoleController {

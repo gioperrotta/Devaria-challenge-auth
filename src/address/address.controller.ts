@@ -14,8 +14,10 @@ import { UpdateAddressDto } from './dto/update-address.dto';
 import { IsPublic } from 'src/auth/decorators/isPublic.decorator';
 import { AccessRolesGuard } from 'src/auth/guards/roleAccess.guard';
 import { Roles } from 'src/auth/decorators/roles.decorator';
-import { Role } from 'src/role/types/roleName.enum';
+import { Role } from 'src/role/types/role.enum';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('address')
 @Controller('address')
 @UseGuards(AccessRolesGuard)
 export class AddressController {
