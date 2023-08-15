@@ -48,7 +48,7 @@ async function setInitialDataDb() {
   });
   if (user) {
     await prisma.user.delete({
-      where: { email: 'gio@admin.com.br' },
+      where: { email: 'gio@admin.com' },
     });
   }
   await prisma.user.create({

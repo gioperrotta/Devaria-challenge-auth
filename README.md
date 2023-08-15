@@ -1,12 +1,41 @@
 
 # <p align="center">AUTHENTICATION - AUTHORIZATION ROLES COM NESTJS</p>
 
-Me foi proposto um desafio, fazer um pequeno projeto de estudo para aprender como funciona o sistema de autorização utilizando NestJS e autenticação com JWT.
+Projeto de estudo para implementar um sistema básico de autorização e autenticação com JWT, utilizando NestJS .
 Esse projeto tem por objetivo, permitir ou não, acesso aos recursos da API, de acordo com a Role associada ao usuário autenticado.
 Outro ponto importante é que somente usuários autenticados com Administradores, podem criar usuários de qualquer tipo.
 Usuários com a "Role Manager"  só podem criar outros usuários de nível inferior ao seu.
+Todos sos dados do sistema devem ser persistidos em um Banco de Dados Relacional POSTGRES.
+### Tenologias Utilizadas
+- NestJS
+- prisma
+- class-validator
+- passport-jwt
+- bcrypts 
+- axios
+- swagger
+### Configuração do ambiente de desenvolvimento
+1. clonar o repositório `git clone <url_git>` 
+2. fazer uma copia do arquivo `.env.example` e renomear o novo arquivo de `.env`
+3. configurar as variáveis de ambiente no arquivo `.env`
+4. instale as dependencias do projeto `npm i`
+5. gere o banco de dados novo `npx prisma migrate dev` 
+6. carregue o banco de dados com dados iniciais `npm run set:data`
+    - Roles: 
+        - `Admin`
+        - `Manager`
+        - `Employee`
+        - `User`
+    - Usuaário Administrador
+        - email: `gio@admin.com`
+        - password: `Gp1234`
+  - para carregar os dados iniciais do sistema 
 
-- ### Nesse projeto foram implementados os seguintes módulos:
+7. execute o comando `npm run start:dev` para subir a aplicação
+8. para a cessar a rota hello da API `http:localhost:3000/hello`
+9. para acessar a documentação da API `http:localhost:3000/api`
+
+- ### Nesse projeto foram implementados os seguintes recursos:
   - user
   - auth
   - role
@@ -27,8 +56,6 @@ Além dessas estruturas foi necessário implementar da estratégia de authentica
   - decorator @IsPublic -> src/auth/decorators/isPubluc.decorator.ts
   - guard JwtAuthGuard -> src/auth/guards/jet.guard.ts
   - strategy JwtStrategy -> src/auth/strategies/jwt.strategy.ts
-
-
 
 ## RFs (Requisitos funcionais)
 - [x] Deve ser possível se cadastrar usuário (users)
