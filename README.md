@@ -84,3 +84,6 @@ Além dessas estruturas foi necessário implementar da estratégia de authentica
   - Manager
   - Employee
   - User
+
+npm ci && npm run build && npx prisma migrate deploy
+
