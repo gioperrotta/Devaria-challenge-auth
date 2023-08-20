@@ -3,67 +3,62 @@ import { hash } from 'bcryptjs';
 const prisma = new PrismaClient();
 const roles = [
   {
+    id: 1,
     name: 'Admin',
     description: 'Administrador do sistema',
     level: 0,
   },
   {
+    id: 2,
     name: 'Manager',
     description: 'Gerente de unidade de Farnquia',
     level: 1,
   },
   {
+    id: 3,
     name: 'Employee',
     description: 'Colaborador de unidade de Farnquia',
     level: 2,
   },
   {
+    id: 4,
     name: 'User',
     description: 'Usuário da aplicação',
     level: 3,
   },
 ];
 
-async function createUserAdmin() {
-  const passwordHash = await hash('Gp1234', 6);
+const user = {
+  name: 'Giovanni Admin',
+  email: 'gio@admin.com.br',
+  password: 'Gp1234',
+  roleId: 1,
+};
 
-  const user = {
-    name: 'Giovanni Admin',
-    email: 'gio@admin.com.br',
-    password: passwordHash,
-    roleId: 1,
-  };
-
-  const exitUser = await prisma.user.findUnique({
-    where: { email: user.email },
-  });
-
-  if (!exitUser) {
-    await prisma.user.create({ data: user });
-  }
-
-  return;
-}
-
-async function createRoles() {
-  roles.forEach(async (role) => {
-    const exitRole = await prisma.role.findUnique({
-      where: { name: role.name },
-    });
-    const data = role;
-    if (!exitRole) {
-      await prisma.role.create({ data });
+async function main(): Promise<void> {
+  console.log('seed is running');
+  try {
+    for (let i = 0; i < roles.length; i++) {
+      const name = roles[i].name;
+      const existsRole = await prisma.role.findUnique({ where: { name } });
+      if (!existsRole) {
+        const data = roles[i];
+        await prisma.role.create({ data });
+      }
     }
-  });
-  return;
-}
 
-async function main() {
-  console.log('Run sedd');
-  await createRoles();
-  await createUserAdmin();
-  await prisma.$disconnect();
-  console.log('seed executed successfully');
+    const exitUser = await prisma.user.findUnique({
+      where: { email: user.email },
+    });
+    const data = { ...user, password: await hash('Gp1234', 6) };
+    if (!exitUser) {
+      await prisma.user.create({ data });
+    }
+    await prisma.$disconnect();
+    console.log('seed executed successfully');
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 main();
