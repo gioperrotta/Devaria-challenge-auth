@@ -6,7 +6,7 @@ import { ApiTags } from '@nestjs/swagger';
 export class AppController {
   @ApiTags('hello')
   @IsPublic()
-  @Get('hello')
+  @Get()
   getHello(): string {
     return 'Hello World';
   }
