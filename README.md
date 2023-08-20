@@ -19,18 +19,8 @@ Todos sos dados do sistema devem ser persistidos em um Banco de Dados Relacional
 2. fazer uma copia do arquivo `.env.example` e renomear o novo arquivo de `.env`
 3. configurar as variáveis de ambiente no arquivo `.env`
 4. instale as dependencias do projeto `npm i`
-5. gere o banco de dados novo `npx prisma migrate dev` 
-6. carregue o banco de dados com dados iniciais `npm run set:data`
-    - Roles: 
-        - `Admin`
-        - `Manager`
-        - `Employee`
-        - `User`
-    - Usuaário Administrador
-        - email: `gio@admin.com`
-        - password: `Gp1234`
-  - para carregar os dados iniciais do sistema 
-
+5. gere o banco de dados novo e também carrega os dados iniciais `npx prisma migrate dev` 
+6. carregue o banco de dados com dados iniciais `npx prisma db seed`
 7. execute o comando `npm run start:dev` para subir a aplicação
 8. para a cessar a rota hello da API `http:localhost:3000/hello`
 9. para acessar a documentação da API `http:localhost:3000/api`
@@ -67,6 +57,7 @@ Além dessas estruturas foi necessário implementar da estratégia de authentica
 - [x] Deve ser possível cadastrar Unidades de Franquia( Franchise Unit)
 - [x] Deve ser possível associar um usuário como gerente de uma unidade de Franquia
 - [x] Deve ser possivel cadastrar endereços(Address) para Unidades de Franquia
+- [x] Deve ser obter dados de endereços consultando cep
 
 ## RNs (Regras de negócio)
 - [x] O usuário não pode ser cadastrado com email duplicado
