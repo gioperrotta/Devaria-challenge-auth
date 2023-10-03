@@ -33,7 +33,10 @@ async function bootstrap() {
   );
 
   app.enableCors({
-    origin: ['http://localhost:3000', '*'],
+    origin: [
+      'http://localhost:3000',
+      'https://devaria-franchise-web.vercel.app/',
+    ],
     methods: ['GET', 'POST', 'PATCH', 'DELETE'],
     credentials: true,
   });
