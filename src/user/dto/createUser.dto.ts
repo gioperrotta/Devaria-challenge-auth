@@ -1,6 +1,6 @@
 import {
   IsEmail,
-  IsNumber,
+  IsNumberString,
   Matches,
   MaxLength,
   MinLength,
@@ -42,6 +42,8 @@ export class CreateUserDto {
    * deverá ser um número entre 1 e 4
    * @example 2
    */
-  @IsNumber({}, { message: MessagesHelper.USER_ROLE_ID_NOT_VALID })
+  @IsNumberString({}, { message: MessagesHelper.USER_ROLE_ID_NOT_VALID })
   roleId: number;
+
+  avatarUrl?: string;
 }

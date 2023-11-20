@@ -5,7 +5,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const PORT = process.env.PORT || 3000;
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { cors: true });
 
   const config = new DocumentBuilder()
     .setTitle('Documentação com Swagger - Estudos NESTJS')
@@ -32,14 +32,15 @@ async function bootstrap() {
     }),
   );
 
-  app.enableCors({
-    origin: [
-      'http://localhost:3000',
-      'https://devaria-franchise-web.vercel.app',
-    ],
-    methods: ['GET', 'POST', 'PATCH', 'DELETE'],
-    credentials: true,
-  });
+  // app.enableCors({
+  //   origin: [
+  //     'http://localhost:3000',
+  //     'http://armazem21.com.br',
+  //     'https://armazem21.com.br',
+  //   ],
+  //   methods: ['GET', 'POST', 'PATCH', 'DELETE'],
+  //   credentials: true,
+  // });
 
   await app.listen(PORT);
 }

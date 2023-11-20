@@ -14,6 +14,9 @@ export const MessagesHelper = {
   USER_UPDATE_PASSWORD_NOT_MATCH: 'Senha informada não confere',
   USER_PASSWORD_UPDATE_SUCCESS: 'Sua senha foi alterada com sucesso',
 
+  USER_SAVING_IMAGE_ERROR: 'Erro ao salvar avatar do usuário',
+  USER_DELETING_PREVIUS_IMAGE_ERROR: 'Erro ao remover imagem anterior',
+
   UNAUTHORIZED_CREATE:
     'Usuáro não Autorizado para criar usuário com a função informada',
 

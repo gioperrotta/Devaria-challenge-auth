@@ -7,6 +7,8 @@ import {
   Param,
   Delete,
   UseGuards,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/createUser.dto';
@@ -18,6 +20,8 @@ import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from 'src/role/types/role.enum';
 import { ChangePasswordDto } from './dto/changePassword.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { FileDto } from 'src/supabase/dto/file.dto';
 
 @ApiTags('user')
 @Controller('user')
@@ -27,11 +31,13 @@ export class UserController {
 
   @Post()
   @Roles(Role.Admin, Role.Manager)
+  @UseInterceptors(FileInterceptor('file'))
   create(
     @CurrentUser() user: UserFromJwt,
     @Body() createUserDto: CreateUserDto,
+    @UploadedFile() file: FileDto,
   ) {
-    return this.userService.create(user.id, createUserDto);
+    return this.userService.create(user.id, createUserDto, file);
   }
 
   @Get('me')
@@ -65,12 +71,14 @@ export class UserController {
 
   @Roles(Role.Admin, Role.Manager)
   @Patch(':id')
+  @UseInterceptors(FileInterceptor('file'))
   update(
     @CurrentUser() user: UserFromJwt,
     @Param('id') id: string,
     @Body() updateUserDto: UpdateUserDto,
+    @UploadedFile() file: FileDto,
   ) {
-    return this.userService.update(user.id, id, updateUserDto);
+    return this.userService.update(user.id, id, updateUserDto, file);
   }
 
   @Roles(Role.Admin, Role.Manager)

@@ -10,6 +10,8 @@ import { AuthModule } from './auth/auth.module';
 import { RoleModule } from './role/role.module';
 import { FranchiseUnitModule } from './franchiseUnit/franchiseUnit.module';
 import { AddressModule } from './address/address.module';
+import { SupabaseService } from './supabase/supabase.service';
+import { SupabaseModule } from './supabase/supabase.module';
 
 @Module({
   imports: [
@@ -19,8 +21,9 @@ import { AddressModule } from './address/address.module';
     RoleModule,
     FranchiseUnitModule,
     AddressModule,
+    SupabaseModule,
   ],
   controllers: [AppController],
-  providers: [{ provide: APP_GUARD, useClass: JwtAuthGuard }],
+  providers: [{ provide: APP_GUARD, useClass: JwtAuthGuard }, SupabaseService],
 })
 export class AppModule {}

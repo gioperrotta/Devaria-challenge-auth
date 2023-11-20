@@ -11,10 +11,11 @@ datasource db {
 }
 
 model User {
-  id       String @id @default(uuid())
-  name     String
-  email    String @unique
-  password String
+  id        String  @id @default(uuid())
+  name      String
+  email     String  @unique
+  password  String
+  avatarUrl String?
 
   createdAt DateTime @default(now()) @map(name: "created_at")
 
@@ -52,14 +53,14 @@ model FranchiseUnit {
   @@map("franchise_units")
 }
 
-enum Type_Addresses {
+enum Type_Address {
   Entrega
   Faturamento
 }
 
 model Address {
-  id          String         @id @default(uuid())
-  tipo        Type_Addresses @default(Entrega)
+  id          String       @id @default(uuid())
+  tipo        Type_Address @default(Entrega)
   cep         String
   logradouro  String
   numero      String
@@ -68,8 +69,44 @@ model Address {
   cidade      String
   uf          String
 
-  franchise_unit  FranchiseUnit @relation(fields: [franchiseUnitId], references: [id])
-  franchiseUnitId String        @map(name: "franchise_unit_id")
+  franchise_unit  FranchiseUnit? @relation(fields: [franchiseUnitId], references: [id])
+  franchiseUnitId String?        @map(name: "franchise_unit_id")
+
+  Custumer   Custumer? @relation(fields: [custumerId], references: [id])
+  custumerId String?   @map(name: "customer_id")
 
   @@map("addresses")
+}
+
+enum Type_Phone {
+  Celular
+  Residencial
+  Trabalho
+  Outros
+}
+
+model PhoneNumber {
+  id        String     @id @default(uuid())
+  typePhone Type_Phone @default(Celular)
+  ddd       String
+  number    String
+
+  Custumer   Custumer? @relation(fields: [custumerId], references: [id])
+  custumerId String?
+
+  @@map("phone_numbers")
+}
+
+model Custumer {
+  id     String        @id @default(uuid())
+  name   String
+  email  String?       @unique
+  cpf    String?       @unique
+  Phones PhoneNumber[]
+
+  Address Address[]
+
+  createdAt DateTime @default(now()) @map(name: "created_at")
+
+  @@map("customers")
 }

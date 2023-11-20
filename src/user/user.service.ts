@@ -14,11 +14,15 @@ import { RoleService } from 'src/role/role.service';
 import { ChangePasswordDto } from './dto/changePassword.dto';
 import { UserWithRole } from './entities/UserWithRole.entity';
 
+import { FileDto } from 'src/supabase/dto/file.dto';
+import { SupabaseService } from 'src/supabase/supabase.service';
+
 @Injectable()
 export class UserService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly roleService: RoleService,
+    private supabase: SupabaseService,
   ) {}
 
   async isAuthorizationUser(
@@ -39,7 +43,13 @@ export class UserService {
     return true;
   }
 
-  async create(userId: string, createUserDto: CreateUserDto): Promise<User> {
+  async create(
+    userId: string,
+    createUserDto: CreateUserDto,
+    file: FileDto,
+  ): Promise<User> {
+    const isStrring = typeof createUserDto.roleId === 'string';
+    if (isStrring) createUserDto.roleId = Number(createUserDto.roleId);
     const existsRole = await this.roleService.findById(createUserDto.roleId);
 
     if (!this.isAuthorizationUser(userId, existsRole.level)) {
@@ -58,6 +68,17 @@ export class UserService {
       ...createUserDto,
       password: passwordHashed,
     };
+
+    if (file) {
+      const fileNameWithDate = `${Date.now()}-${file.originalname}`;
+      file.originalname = fileNameWithDate;
+      const result = await this.supabase.upload('User-Avatars', file);
+      if (!result.error) {
+        newUser.avatarUrl = file.originalname;
+      } else {
+        throw new BadRequestException(MessagesHelper.USER_SAVING_IMAGE_ERROR);
+      }
+    }
 
     const createdUser = await this.prisma.user.create({ data: newUser });
 
@@ -103,7 +124,12 @@ export class UserService {
     };
   }
 
-  async update(userId: string, id: string, updateUserDto: UpdateUserDto) {
+  async update(
+    userId: string,
+    id: string,
+    updateUserDto: UpdateUserDto,
+    file: FileDto,
+  ) {
     if (updateUserDto.email || updateUserDto.password) {
       throw new BadRequestException(
         MessagesHelper.USER_UPDATE_NOT_PASSWORD_OR_EMAIL,
@@ -116,10 +142,35 @@ export class UserService {
       throw new BadRequestException(MessagesHelper.USER_ID_NOT_FOUND);
     }
 
+    const isStrring = typeof updateUserDto.roleId === 'string';
+    if (isStrring) updateUserDto.roleId = Number(updateUserDto.roleId);
     if (updateUserDto.roleId) {
       const existsRole = await this.roleService.findById(updateUserDto.roleId);
       if (!this.isAuthorizationUser(userId, existsRole.level)) {
         throw new UnauthorizedException(MessagesHelper.UNAUTHORIZED_UPDATE);
+      }
+    }
+
+    if (file) {
+      if (existsUser.avatarUrl) {
+        const result = await this.supabase.remove(
+          'User-Avatars',
+          existsUser.avatarUrl,
+        );
+        if (result.error) {
+          throw new BadRequestException(
+            MessagesHelper.USER_DELETING_PREVIUS_IMAGE_ERROR,
+          );
+        }
+      }
+      const fileNameWithDate = `${Date.now()}-${file.originalname}`;
+      file.originalname = fileNameWithDate;
+
+      const result = await this.supabase.upload('User-Avatars', file);
+      if (!result.error) {
+        updateUserDto.avatarUrl = file.originalname;
+      } else {
+        throw new BadRequestException(MessagesHelper.USER_SAVING_IMAGE_ERROR);
       }
     }
 
@@ -151,6 +202,18 @@ export class UserService {
 
     if (!this.isAuthorizationUser(userId, userToDelete.role.level)) {
       throw new UnauthorizedException(MessagesHelper.UNAUTHORIZED_DELETE);
+    }
+
+    if (existsUser.avatarUrl) {
+      const result = await this.supabase.remove(
+        'User-Avatars',
+        existsUser.avatarUrl,
+      );
+      if (result.error) {
+        throw new BadRequestException(
+          MessagesHelper.USER_DELETING_PREVIUS_IMAGE_ERROR,
+        );
+      }
     }
 
     await this.prisma.user.delete({
